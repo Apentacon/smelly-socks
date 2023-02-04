@@ -6,10 +6,11 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float moveSpeed;
+    public GameObject winScreen;
     // Start is called before the first frame update
     void Start()
     {
-
+        winScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,17 +34,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.tag == "Dog")
+        if (other.gameObject.tag == "Dog")
         {
+            winScreen.SetActive(true);
             Time.timeScale = 0;
-            Debug.Log("YOU WIN!");
-        }
-        if (collision.gameObject.name == "DogCube")
-        {
-            Time.timeScale = 0;
-            Debug.Log("YOU WIN!");
         }
     }
 }
