@@ -6,13 +6,19 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float moveSpeed;
+    public GameObject winScreen;
     public GameObject looseScreen;
-    public GameObject buttonImage;
     private Rigidbody2D player;
     Vector2 m_Input;
+    public GameObject LevelManager;
     private LevelTransition levelTransition;
-    private float moveDirectionX;
-    private float moveDirectionY;
+    
+    
+    public List<GameObject> Papers;
+    public GameObject Key;
+    public GameObject Lock;
+    public GameObject Doors;
+
 
     public GameObject u;
     public GameObject i;
@@ -20,8 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        looseScreen.SetActive(false);
-        buttonImage.SetActive(true);
+        //winScreen.SetActive(false);
         player = GetComponent<Rigidbody2D>();
         levelTransition = GameObject.Find("LevelManager").GetComponent<LevelTransition>();
         Time.timeScale = 1;
@@ -64,6 +69,18 @@ public class PlayerMovement : MonoBehaviour
         {
             moveDirectionY = 0;
         }
+        if (Input.GetKeyDown(KeyCode.Escape) && Papers[1].activeSelf)
+        {
+            Papers[1].SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) && Papers[2].activeSelf)
+        {
+            Papers[2].SetActive(false);
+        }
+        if(Input.GetKeyDown(KeyCode.Escape) && Papers[3].activeSelf)
+        {
+            Papers[3].SetActive(false);
+        }
 
         m_Input = new Vector2(moveDirectionX, moveDirectionY);
     }
@@ -71,10 +88,11 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         player.AddForce(m_Input * Time.deltaTime * moveSpeed);
-        if (moveDirectionX == 0 && moveDirectionY == 0)
+        //player.velocity = m_Input * moveSpeed * Time.deltaTime;
+        if (Input.GetAxisRaw("Horizontal")  == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
             //player.velocity = Vector2.zero;
-        }
+       }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -96,6 +114,27 @@ public class PlayerMovement : MonoBehaviour
                 levelTransition.LevelSwitch();
                 player.velocity = Vector2.zero;
                 break;
+            case "Paper_1":
+                Papers[1].SetActive(true);
+                break;
+            case "Paper_2":
+                Papers[2].SetActive(true);
+                break;
+            case "Paper_3":
+                Papers[3].SetActive(true);
+                break;
+            case "Key":
+                Key.SetActive(false);
+                break;
+            case "Lock":
+                Lock.SetActive(false);
+                Doors.SetActive(true);
+                break;
         }
-    }
+         /*if (collision.gameObject.tag == "Lock" && !Lock.activeSelf)
+         { 
+             Lock.SetActive(false);
+             Doors.SetActive(true);
+         }*/
+     }
 }

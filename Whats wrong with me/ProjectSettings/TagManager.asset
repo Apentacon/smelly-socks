@@ -10,6 +10,11 @@ TagManager:
   - Doors
   - Laser
   - Paper
+  - Lock
+  - Key
+  - Paper_1
+  - Paper_2
+  - Paper_3
   layers:
   - Default
   - TransparentFX
