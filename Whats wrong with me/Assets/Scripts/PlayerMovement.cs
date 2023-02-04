@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        m_Input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
 
     private void FixedUpdate()
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal")  == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
             //player.velocity = Vector2.zero;
-       }
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
