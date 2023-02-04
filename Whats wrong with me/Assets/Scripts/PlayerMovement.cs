@@ -8,11 +8,15 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     public GameObject winScreen;
     private Rigidbody player;
+    public GameObject LevelManager;
+    private LevelTransition levelTransition;
 
     void Start()
     {
         winScreen.SetActive(false);
         player = GetComponent<Rigidbody>();
+        LevelManager = GameObject.Find("LevelManager");
+        levelTransition = LevelManager.GetComponent<LevelTransition>();
     }
 
     // Update is called once per frame
@@ -53,6 +57,10 @@ public class PlayerMovement : MonoBehaviour
         {
             winScreen.SetActive(true);
             Time.timeScale = 0;
+        }
+        else if (other.gameObject.tag == "Left_Door")
+        { 
+            levelTransition.LevelSwitch();
         }
     }
 }

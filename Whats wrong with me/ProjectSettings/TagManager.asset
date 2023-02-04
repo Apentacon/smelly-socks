@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Dog
+  - Left_Door
+  - Right_Door
   layers:
   - Default
   - TransparentFX
