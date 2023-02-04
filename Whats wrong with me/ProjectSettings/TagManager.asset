@@ -9,6 +9,11 @@ TagManager:
   - Right_Door
   - Doors
   - Laser
+  - Lock
+  - Key
+  - Paper_1
+  - Paper_2
+  - Paper_3
   layers:
   - Default
   - TransparentFX

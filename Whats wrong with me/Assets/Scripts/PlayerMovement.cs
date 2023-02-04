@@ -6,92 +6,95 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float moveSpeed;
+    public GameObject winScreen;
     public GameObject looseScreen;
-    public GameObject buttonImage;
     private Rigidbody2D player;
     Vector2 m_Input;
-    private GameObject levelScript;
+    public GameObject LevelManager;
     private LevelTransition levelTransition;
-    private float moveDirectionX;
-    private float moveDirectionY;
+    
+    
+    public List<GameObject> Papers;
+    public GameObject Key;
+    public GameObject Lock;
+    public GameObject Doors;
+
 
     void Start()
     {
-        looseScreen.SetActive(false);
-        buttonImage.SetActive(true);
+        //winScreen.SetActive(false);
         player = GetComponent<Rigidbody2D>();
-        levelScript = GameObject.Find("LevelManager");
-        levelTransition = levelScript.GetComponent<LevelTransition>();
-        Time.timeScale = 1;
+        //levelTransition = 
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
+        m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        
+        if(Input.GetKeyDown(KeyCode.Escape) && Papers[1].activeSelf)
         {
-            moveDirectionX = -1;
+            Papers[1].SetActive(false);
         }
-        else if (Input.GetKeyUp(KeyCode.K))
+        if(Input.GetKeyDown(KeyCode.Escape) && Papers[2].activeSelf)
         {
-            moveDirectionX = 0;
+            Papers[2].SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.Escape) && Papers[3].activeSelf)
         {
-            moveDirectionX = 1;
+            Papers[3].SetActive(false);
         }
-        else if (Input.GetKeyUp(KeyCode.P))
-        {
-            moveDirectionX = 0;
-        }
-        else if (Input.GetKeyDown(KeyCode.M))
-        {
-            moveDirectionY = 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.M))
-        {
-            moveDirectionY = 0;
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            moveDirectionY = -1;
-        }
-        else if (Input.GetKeyUp(KeyCode.R))
-        {
-            moveDirectionY = 0;
-        }
-
-        m_Input = new Vector2(moveDirectionX, moveDirectionY);
     }
 
     private void FixedUpdate()
     {
         player.AddForce(m_Input * Time.deltaTime * moveSpeed);
-        if (moveDirectionX == 0 && moveDirectionY == 0)
+        //player.velocity = m_Input * moveSpeed * Time.deltaTime;
+        if (Input.GetAxisRaw("Horizontal")  == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
             //player.velocity = Vector2.zero;
-        }
+       }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Dog")
-        {
-        Time.timeScale = 0;
-        }
-        if(collision.gameObject.tag == "Doors")
-        {
-        Debug.Log("NEXT LEVEL");
-        }
-        if (collision.gameObject.tag == "Laser")
-        {
-        looseScreen.SetActive(true);
-        buttonImage.SetActive(false);
-        Time.timeScale = 0;
-        }
-        else if (collision.gameObject.tag == "Left_Door")
+     {
+         if (collision.gameObject.tag == "Dog")
+         {
+             winScreen.SetActive(true);
+             Time.timeScale = 0;
+         }
+         if(collision.gameObject.tag == "Doors")
+         {
+             Debug.Log("NEXT LEVEL");
+         }
+         if (collision.gameObject.tag == "Laser")
+         {
+             looseScreen.SetActive(true);
+             Time.timeScale = 0;
+         }
+         if (collision.gameObject.tag == "Left_Door")
         { 
             levelTransition.LevelSwitch();
-            player.velocity = Vector2.zero;
         }
-    }
+         if (collision.gameObject.tag == "Paper_1")
+         {
+             Papers[1].SetActive(true);
+         }
+         if(collision.gameObject.tag == "Paper_2")
+         {
+             Papers[2].SetActive(true);
+         }
+         if (collision.gameObject.tag == "Paper_3")
+         {
+             Papers[3].SetActive(true);
+         }
+         if (collision.gameObject.tag == "Key")
+         { 
+             Key.SetActive(false);
+         }
+         if (collision.gameObject.tag == "Lock" && !Lock.activeSelf)
+         { 
+             Lock.SetActive(false);
+             Doors.SetActive(true);
+         }
+     }
 }
