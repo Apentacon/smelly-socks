@@ -7,56 +7,46 @@ public class PlayerMovement : MonoBehaviour
 
     public float moveSpeed;
     public GameObject winScreen;
-    private Rigidbody player;
+    public GameObject looseScreen;
+    private Rigidbody2D player;
+    Vector2 m_Input;
 
     void Start()
     {
-        winScreen.SetActive(false);
-        player = GetComponent<Rigidbody>();
+        //winScreen.SetActive(false);
+        player = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    /*void Update()
+    void Update()
     {
-        if(Input.GetKey(KeyCode.W))
-        {
-             transform.position = transform.position + new Vector3(0f, 0f, moveSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position = transform.position + new Vector3(-moveSpeed * Time.deltaTime, 0f, 0f);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position = transform.position + new Vector3(0f, 0f, -moveSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position = transform.position + new Vector3(moveSpeed * Time.deltaTime, 0f, 0f);
-        }
-    }*/
+        m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    }
 
     private void FixedUpdate()
     {
-        Vector3 m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        player.MovePosition(transform.position + m_Input * Time.deltaTime * moveSpeed);
+        player.AddForce(m_Input * Time.deltaTime * moveSpeed);
+        //player.velocity = m_Input * moveSpeed * Time.deltaTime;
         if (Input.GetAxisRaw("Horizontal")  == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
-            player.velocity = Vector3.zero;
-            player.angularVelocity = Vector3.zero;
-        }
+            //player.velocity = Vector2.zero;
+       }
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Dog")
-        {
-            winScreen.SetActive(true);
-            Time.timeScale = 0;
-        }
-        if(other.gameObject.tag == "Doors")
-        {
-            Debug.Log("NEXT LEVEL");
-        }
-    }
+    public void OnTriggerEnter2D(Collider2D collision)
+     {
+         if (collision.gameObject.tag == "Dog")
+         {
+             winScreen.SetActive(true);
+             Time.timeScale = 0;
+         }
+         if(collision.gameObject.tag == "Doors")
+         {
+             Debug.Log("NEXT LEVEL");
+         }
+         if (collision.gameObject.tag == "Laser")
+         {
+             looseScreen.SetActive(true);
+             Time.timeScale = 0;
+         }
+     }
 }
