@@ -7,11 +7,13 @@ TagManager:
   - Dog
   - Left_Door
   - Right_Door
+  - Doors
+  - Laser
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
