@@ -54,5 +54,9 @@ public class PlayerMovement : MonoBehaviour
             winScreen.SetActive(true);
             Time.timeScale = 0;
         }
+        if(other.gameObject.tag == "Doors")
+        {
+            Debug.Log("NEXT LEVEL");
+        }
     }
 }
