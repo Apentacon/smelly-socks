@@ -6,6 +6,9 @@ public class moveUpDown2 : MonoBehaviour
 {
     public float amp;
     public float freq;
+    private Vector3 startPosition;
+    public float offset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +18,6 @@ public class moveUpDown2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(-0.36f, Mathf.Sin(3.14f + Time.time * freq) * amp, 0);
+        transform.position = startPosition + transform.up * Mathf.Sin(Time.time * freq + offset) * amp;
     }
 }
