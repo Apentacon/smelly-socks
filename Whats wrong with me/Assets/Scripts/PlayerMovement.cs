@@ -10,52 +10,57 @@ public class PlayerMovement : MonoBehaviour
     public GameObject buttonImage;
     private Rigidbody2D player;
     Vector2 m_Input;
-    private GameObject levelScript;
     private LevelTransition levelTransition;
     private float moveDirectionX;
     private float moveDirectionY;
+
+    public GameObject u;
+    public GameObject i;
+    public GameObject o;
 
     void Start()
     {
         looseScreen.SetActive(false);
         buttonImage.SetActive(true);
         player = GetComponent<Rigidbody2D>();
-        levelScript = GameObject.Find("LevelManager");
-        levelTransition = levelScript.GetComponent<LevelTransition>();
+        levelTransition = GameObject.Find("LevelManager").GetComponent<LevelTransition>();
         Time.timeScale = 1;
+        u.SetActive(false);
+        i.SetActive(false);
+        o.SetActive(false);
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
+        if(Input.GetKeyDown(KeyCode.U) && u.activeSelf)
         {
             moveDirectionX = -1;
         }
-        else if (Input.GetKeyUp(KeyCode.K))
+        else if (Input.GetKeyUp(KeyCode.U) && u.activeSelf)
         {
             moveDirectionX = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.P))
+        else if (Input.GetKeyDown(KeyCode.O) && o.activeSelf)
         {
             moveDirectionX = 1;
         }
-        else if (Input.GetKeyUp(KeyCode.P))
+        else if (Input.GetKeyUp(KeyCode.O) && o.activeSelf)
         {
             moveDirectionX = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.M))
+        else if (Input.GetKeyDown(KeyCode.I) && i.activeSelf)
         {
             moveDirectionY = 1;
         }
-        else if (Input.GetKeyUp(KeyCode.M))
+        else if (Input.GetKeyUp(KeyCode.I) && i.activeSelf)
         {
             moveDirectionY = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.R))
+        else if (Input.GetKeyDown(KeyCode.K))
         {
             moveDirectionY = -1;
         }
-        else if (Input.GetKeyUp(KeyCode.R))
+        else if (Input.GetKeyUp(KeyCode.K))
         {
             moveDirectionY = 0;
         }
@@ -74,24 +79,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Dog")
+        switch (collision.gameObject.tag)
         {
-        Time.timeScale = 0;
-        }
-        if(collision.gameObject.tag == "Doors")
-        {
-        Debug.Log("NEXT LEVEL");
-        }
-        if (collision.gameObject.tag == "Laser")
-        {
-        looseScreen.SetActive(true);
-        buttonImage.SetActive(false);
-        Time.timeScale = 0;
-        }
-        else if (collision.gameObject.tag == "Left_Door")
-        { 
-            levelTransition.LevelSwitch();
-            player.velocity = Vector2.zero;
+            case "Dog":
+                Time.timeScale = 0;
+                break;
+            case "Doors":
+                Debug.Log("NEXT LEVEL");
+                break;
+            case "Laser":
+                looseScreen.SetActive(true);
+                buttonImage.SetActive(false);
+                Time.timeScale = 0;
+                break;
+            case "Left_Door":
+                levelTransition.LevelSwitch();
+                player.velocity = Vector2.zero;
+                break;
         }
     }
 }
