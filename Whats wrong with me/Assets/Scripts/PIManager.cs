@@ -12,6 +12,10 @@ public class PIManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape) && Papers[0].activeSelf)
+        {
+            Papers[0].SetActive(false);
+        }
         if(Input.GetKeyDown(KeyCode.Escape) && Papers[1].activeSelf)
         {
             Papers[1].SetActive(false);
@@ -20,25 +24,21 @@ public class PIManager : MonoBehaviour
         {
             Papers[2].SetActive(false);
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && Papers[3].activeSelf)
-        {
-            Papers[3].SetActive(false);
-        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Paper_1")
         {
-            Papers[1].SetActive(true);
+            Papers[0].SetActive(true);
         }
         if(collision.gameObject.tag == "Paper_2")
         {
-            Papers[2].SetActive(true);
+            Papers[1].SetActive(true);
         }
         if (collision.gameObject.tag == "Paper_3")
         {
-            Papers[3].SetActive(true);
+            Papers[2].SetActive(true);
         }
         if (collision.gameObject.tag == "Key")
         { 

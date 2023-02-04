@@ -6,12 +6,14 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float moveSpeed;
-    public GameObject winScreen;
     public GameObject looseScreen;
+    public GameObject buttonImage;
     private Rigidbody2D player;
     Vector2 m_Input;
     public GameObject LevelManager;
     private LevelTransition levelTransition;
+    float moveDirectionX;
+    float moveDirectionY;
     
     
     public List<GameObject> Papers;
@@ -26,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        //winScreen.SetActive(false);
         player = GetComponent<Rigidbody2D>();
         levelTransition = GameObject.Find("LevelManager").GetComponent<LevelTransition>();
         Time.timeScale = 1;
@@ -69,17 +70,17 @@ public class PlayerMovement : MonoBehaviour
         {
             moveDirectionY = 0;
         }
+        if (Input.GetKeyDown(KeyCode.Escape) && Papers[0].activeSelf)
+        {
+            Papers[0].SetActive(false);
+        }
         if (Input.GetKeyDown(KeyCode.Escape) && Papers[1].activeSelf)
         {
             Papers[1].SetActive(false);
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && Papers[2].activeSelf)
+        if(Input.GetKeyDown(KeyCode.Escape) && Papers[2].activeSelf)
         {
             Papers[2].SetActive(false);
-        }
-        if(Input.GetKeyDown(KeyCode.Escape) && Papers[3].activeSelf)
-        {
-            Papers[3].SetActive(false);
         }
 
         m_Input = new Vector2(moveDirectionX, moveDirectionY);
@@ -115,13 +116,16 @@ public class PlayerMovement : MonoBehaviour
                 player.velocity = Vector2.zero;
                 break;
             case "Paper_1":
-                Papers[1].SetActive(true);
+                Papers[0].SetActive(true);
+                u.SetActive(true);
                 break;
             case "Paper_2":
-                Papers[2].SetActive(true);
+                Papers[1].SetActive(true);
+                i.SetActive(true);
                 break;
             case "Paper_3":
-                Papers[3].SetActive(true);
+                Papers[2].SetActive(true);
+                o.SetActive(true);
                 break;
             case "Key":
                 Key.SetActive(false);
