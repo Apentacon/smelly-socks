@@ -10,13 +10,15 @@ public class PlayerMovement : MonoBehaviour
     public GameObject looseScreen;
     private Rigidbody2D player;
     Vector2 m_Input;
-    public GameObject LevelManager;
+    private GameObject levelScript;
     private LevelTransition levelTransition;
 
     void Start()
     {
         //winScreen.SetActive(false);
         player = GetComponent<Rigidbody2D>();
+        levelScript = GameObject.Find("LevelManager");
+        levelTransition = levelScript.GetComponent<LevelTransition>();
     }
 
     void Update()
@@ -50,9 +52,10 @@ public class PlayerMovement : MonoBehaviour
              looseScreen.SetActive(true);
              Time.timeScale = 0;
          }
-         else if (other.gameObject.tag == "Left_Door")
+         else if (collision.gameObject.tag == "Left_Door")
         { 
             levelTransition.LevelSwitch();
+            player.velocity = Vector2.zero;
         }
      }
 }

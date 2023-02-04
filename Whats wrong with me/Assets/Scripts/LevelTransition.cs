@@ -42,7 +42,7 @@ public class LevelTransition : MonoBehaviour
         {
             t += Time.deltaTime * (Time.timeScale / lerpSpeed);
  
-            Camera.transform.position = Vector3.Lerp(new Vector3(PreviousLevelPosition.x, Camera.transform.position.y, PreviousLevelPosition.z), new Vector3(newPosition.x, Camera.transform.position.y, newPosition.z), t);
+            Camera.transform.position = Vector3.Lerp(new Vector3(PreviousLevelPosition.x, Camera.transform.position.y, Camera.transform.position.z), new Vector3(newPosition.x, Camera.transform.position.y, Camera.transform.position.z), t);
             Player.transform.position = SpawnPointPosition;
             yield return null;
         }
