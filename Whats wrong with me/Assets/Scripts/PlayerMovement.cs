@@ -7,18 +7,20 @@ public class PlayerMovement : MonoBehaviour
 
     public float moveSpeed;
     public GameObject winScreen;
-    // Start is called before the first frame update
+    private Rigidbody player;
+
     void Start()
     {
         winScreen.SetActive(false);
+        player = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         if(Input.GetKey(KeyCode.W))
         {
-            transform.position = transform.position + new Vector3(0f, 0f, moveSpeed * Time.deltaTime);
+             transform.position = transform.position + new Vector3(0f, 0f, moveSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -31,6 +33,17 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             transform.position = transform.position + new Vector3(moveSpeed * Time.deltaTime, 0f, 0f);
+        }
+    }*/
+
+    private void FixedUpdate()
+    {
+        Vector3 m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        player.MovePosition(transform.position + m_Input * Time.deltaTime * moveSpeed);
+        if (Input.GetAxisRaw("Horizontal")  == 0 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            player.velocity = Vector3.zero;
+            player.angularVelocity = Vector3.zero;
         }
     }
 
