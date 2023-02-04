@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Dog
+  - Doors
+  - Laser
   layers:
   - Default
   - TransparentFX
