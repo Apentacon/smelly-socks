@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject continueText;
     public GameObject speachBubles;
     public GameObject dogBubles;
+    public GameObject pauseScreen;
     
     
     public List<GameObject> Papers;
@@ -56,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             continueText.SetActive(false);
             speachBubles.SetActive(true);
@@ -100,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 moveDirectionY = 0;
             }
-            if (Input.GetKeyDown(KeyCode.Escape) && Papers[0].activeSelf)
+           /* if (Input.GetKeyDown(KeyCode.Escape) && Papers[0].activeSelf)
             {
                 Papers[0].SetActive(false);
             }
@@ -111,7 +112,26 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) && Papers[2].activeSelf)
             {
                 Papers[2].SetActive(false);
-            }
+            }*/
+            
+        }
+
+        if(pauseScreen.activeSelf)
+        {
+            canMove = false;
+            player.velocity = Vector2.zero;
+        } else if(!pauseScreen.activeSelf)
+        {
+            canMove = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseScreen.activeSelf)
+        {
+            pauseScreen.SetActive(false);
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && !pauseScreen.activeSelf)
+        {
+            pauseScreen.SetActive(true);
         }
 
         m_Input = new Vector2(moveDirectionX, moveDirectionY);
@@ -153,6 +173,10 @@ public class PlayerMovement : MonoBehaviour
                 Papers[2].SetActive(true);
                 o.SetActive(true);
                 break;
+            case "FinalPaper":
+                Papers[3].SetActive(true);
+                o.SetActive(true);
+                break;
             case "Key":
                 Key.SetActive(false);
                 Doors.SetActive(true);
@@ -172,6 +196,9 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case "Paper_3":
                 Papers[2].SetActive(false);
+                break;
+            case "FinalPaper":
+                Papers[3].SetActive(false);
                 break;
         }
     }

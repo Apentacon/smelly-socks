@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\spin2.cs" />
     <Compile Include="Assets\Scripts\moveUpDown2.cs" />
     <Compile Include="Assets\Scripts\moveUpDown.cs" />
+    <Compile Include="Assets\AnimationEventTrigger.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\spin.cs" />

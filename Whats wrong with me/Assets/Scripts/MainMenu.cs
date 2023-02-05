@@ -8,11 +8,13 @@ public class MainMenu : MonoBehaviour
     public string firstLevel;
     public string menuLevel;
 
+    public GameObject pauseScreen;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        pauseScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,5 +37,10 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Quitting.");
+    }
+
+    public void Resume()
+    {
+        pauseScreen.SetActive(false);
     }
 }
