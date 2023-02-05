@@ -4,22 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Dog
-  - Left_Door
-  - Right_Door
-  - Doors
   - Laser
-  - Paper
-  - Lock
-  - Key
-  - Paper_1
-  - Paper_2
+  - Left_Door
   - Paper_3
+  - Lock
+  - Paper_2
+  - Paper_1
+  - Key
+  - Dog
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
   - 

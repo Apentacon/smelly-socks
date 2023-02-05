@@ -13,13 +13,14 @@ public class LevelTransition : MonoBehaviour
     private Vector3 NextLevelPosition;
     private Vector3 PreviousLevelPosition;
     private Vector3 SpawnPointPosition;
+    int levelCount = 0;
 
 
     private void Start()
     {
-        NextLevelPosition = Levels[1].transform.position;
-        PreviousLevelPosition = Levels[0].transform.position;
-        SpawnPointPosition = SpawnPoints[0].transform.position;
+        NextLevelPosition = Levels[levelCount+1].transform.position;
+        PreviousLevelPosition = Levels[levelCount].transform.position;
+        SpawnPointPosition = SpawnPoints[levelCount].transform.position;
     }
     
     public void LevelSwitch()
@@ -28,7 +29,8 @@ public class LevelTransition : MonoBehaviour
     }
  
     IEnumerator LerpToPosition(float lerpSpeed, Vector3 newPosition, bool useRelativeSpeed = false)
-    {    
+    {
+        
         if (useRelativeSpeed)
         {
             float totalDistance = PreviousLevelPosition.x - NextLevelPosition.x;
@@ -47,15 +49,12 @@ public class LevelTransition : MonoBehaviour
             yield return null;
         }
 
-        for (int i = 0; i < Levels.Count; i++)
+        if(levelCount < Levels.Count)
         {
-            PreviousLevelPosition = NextLevelPosition;
-            NextLevelPosition = Levels[i].transform.position;
-        }
-
-        for (int i = 0; i < SpawnPoints.Count; i++)
-        {
-            SpawnPointPosition = SpawnPoints[i].transform.position;
+            levelCount += 1;
+            NextLevelPosition = Levels[levelCount + 1].transform.position;
+            PreviousLevelPosition = Levels[levelCount].transform.position;
+            SpawnPointPosition = SpawnPoints[levelCount].transform.position;
         }
     }
 }

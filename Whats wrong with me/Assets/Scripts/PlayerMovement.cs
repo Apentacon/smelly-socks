@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class PlayerMovement : MonoBehaviour
     public GameObject buttonImage;
     private Rigidbody2D player;
     Vector2 m_Input;
-    public GameObject LevelManager;
     private LevelTransition levelTransition;
     float moveDirectionX;
     float moveDirectionY;
+    public GameObject continueText;
+    public GameObject speachBubles;
     
     
     public List<GameObject> Papers;
@@ -26,6 +28,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject i;
     public GameObject o;
 
+    public Image uIm;
+    public Image iIm;
+    public Image oIm;
+    public Image kIm;
+
+    private bool canMove;
+
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
@@ -34,53 +43,73 @@ public class PlayerMovement : MonoBehaviour
         u.SetActive(false);
         i.SetActive(false);
         o.SetActive(false);
+        uIm.enabled = false;
+        iIm.enabled = false; 
+        oIm.enabled = false;
+        kIm.enabled = false;
+        speachBubles.SetActive(false);
+        continueText.SetActive(true);
+        canMove = false;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.U) && u.activeSelf)
+        if(Input.GetKey(KeyCode.Space))
         {
-            moveDirectionX = -1;
+            continueText.SetActive(false);
+            speachBubles.SetActive(true);
+            canMove = true;
         }
-        else if (Input.GetKeyUp(KeyCode.U) && u.activeSelf)
+        if(canMove)
         {
-            moveDirectionX = 0;
-        }
-        else if (Input.GetKeyDown(KeyCode.O) && o.activeSelf)
-        {
-            moveDirectionX = 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.O) && o.activeSelf)
-        {
-            moveDirectionX = 0;
-        }
-        else if (Input.GetKeyDown(KeyCode.I) && i.activeSelf)
-        {
-            moveDirectionY = 1;
-        }
-        else if (Input.GetKeyUp(KeyCode.I) && i.activeSelf)
-        {
-            moveDirectionY = 0;
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            moveDirectionY = -1;
-        }
-        else if (Input.GetKeyUp(KeyCode.K))
-        {
-            moveDirectionY = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.Escape) && Papers[0].activeSelf)
-        {
-            Papers[0].SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.Escape) && Papers[1].activeSelf)
-        {
-            Papers[1].SetActive(false);
-        }
-        if(Input.GetKeyDown(KeyCode.Escape) && Papers[2].activeSelf)
-        {
-            Papers[2].SetActive(false);
+            if (Input.GetKeyDown(KeyCode.U) && u.activeSelf)
+            {
+                moveDirectionX = -1;
+                uIm.enabled = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.U) && u.activeSelf)
+            {
+                moveDirectionX = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.O) && o.activeSelf)
+            {
+                moveDirectionX = 1;
+                oIm.enabled = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.O) && o.activeSelf)
+            {
+                moveDirectionX = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.I) && i.activeSelf)
+            {
+                moveDirectionY = 1;
+                iIm.enabled = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.I) && i.activeSelf)
+            {
+                moveDirectionY = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.K))
+            {
+                moveDirectionY = -1;
+                kIm.enabled = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.K))
+            {
+                moveDirectionY = 0;
+            }
+            if (Input.GetKeyDown(KeyCode.Escape) && Papers[0].activeSelf)
+            {
+                Papers[0].SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.Escape) && Papers[1].activeSelf)
+            {
+                Papers[1].SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.Escape) && Papers[2].activeSelf)
+            {
+                Papers[2].SetActive(false);
+            }
         }
 
         m_Input = new Vector2(moveDirectionX, moveDirectionY);
@@ -89,11 +118,6 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         player.AddForce(m_Input * Time.deltaTime * moveSpeed);
-        //player.velocity = m_Input * moveSpeed * Time.deltaTime;
-        if (Input.GetAxisRaw("Horizontal")  == 0 && Input.GetAxisRaw("Vertical") == 0)
-        {
-            //player.velocity = Vector2.zero;
-       }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -101,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Dog":
-                Time.timeScale = 0;
+                // add more text
                 break;
             case "Doors":
                 Debug.Log("NEXT LEVEL");
@@ -129,16 +153,24 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case "Key":
                 Key.SetActive(false);
-                break;
-            case "Lock":
-                Lock.SetActive(false);
                 Doors.SetActive(true);
                 break;
         }
-         /*if (collision.gameObject.tag == "Lock" && !Lock.activeSelf)
-         { 
-             Lock.SetActive(false);
-             Doors.SetActive(true);
-         }*/
      }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Paper_1":
+                Papers[0].SetActive(false);
+                break;
+            case "Paper_2":
+                Papers[1].SetActive(false);
+                break;
+            case "Paper_3":
+                Papers[2].SetActive(false);
+                break;
+        }
+    }
 }
