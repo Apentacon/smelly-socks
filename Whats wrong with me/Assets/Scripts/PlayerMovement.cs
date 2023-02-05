@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     float moveDirectionY;
     public GameObject continueText;
     public GameObject speachBubles;
+    public GameObject dogBubles;
     
     
     public List<GameObject> Papers;
@@ -49,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         kIm.enabled = false;
         speachBubles.SetActive(false);
         continueText.SetActive(true);
+        dogBubles.SetActive(false);
         canMove = false;
     }
 
@@ -125,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Dog":
-                // add more text
+                dogBubles.SetActive(true);
                 break;
             case "Doors":
                 Debug.Log("NEXT LEVEL");
